@@ -9,17 +9,24 @@ public class player : MonoBehaviour
     // Start is called before the first frame update
 
     //获取刚体
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     //默认速度
     public float speed;
     //跳跃
     public float jump;
     //动画
-    public Animator animator;
+    private Animator animator;
     //获取到地面
     public LayerMask ground;
     //获取碰撞体
     public Collider2D playerCollider2D;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -64,12 +71,26 @@ public class player : MonoBehaviour
             {
                 animator.SetBool("jumping",false);
                 animator.SetBool("falling",true);
-            }else if (playerCollider2D.IsTouchingLayers(ground))
-            {
-                //碰撞到地面了
-                animator.SetBool("falling",false);
-                animator.SetBool("idle",true);
+                
             }
+        }else if (playerCollider2D.IsTouchingLayers(ground))
+        {
+            //碰撞到地面了
+            animator.SetBool("falling",false);
+            animator.SetBool("idle",true);
+        }
+    }
+    
+    // 物品碰撞检测
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log(col.gameObject.tag);
+        if (col.gameObject.CompareTag("goods"))
+        {
+            //销毁物品
+            Destroy(col.gameObject);
+            Debug.Log("destroy the goods");
+            return;
         }
     }
 }

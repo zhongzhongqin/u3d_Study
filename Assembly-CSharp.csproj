@@ -59,6 +59,9 @@
   <ItemGroup>
     <Compile Include="Assets\CameraScript\CameraScript.cs" />
     <Compile Include="Assets\mPlayerScript\player.cs" />
+    <Reference Include="Cinemachine">
+      <HintPath>/Users/hsqmini/work_space/u3dFirst/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/hsqmini/work_space/u3dFirst/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -68,17 +71,14 @@
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>/Users/hsqmini/work_space/u3dFirst/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>/Users/hsqmini/work_space/u3dFirst/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>/Users/hsqmini/work_space/u3dFirst/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>/Users/hsqmini/work_space/u3dFirst/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-      <HintPath>/Users/hsqmini/work_space/u3dFirst/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>/Users/hsqmini/work_space/u3dFirst/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

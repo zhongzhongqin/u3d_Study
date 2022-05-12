@@ -71,14 +71,34 @@ public class player : MonoBehaviour
         
         if (faceDircetion != 0)
         {
-            transform.localScale = new Vector3(faceDircetion, 1, 1);
-            animator.SetFloat("running",Mathf.Abs(faceDircetion));
+            if (!animator.GetBool("squta"))
+            {
+                //若处于蹲伏状态键入左右方向
+                transform.localScale = new Vector3(faceDircetion, 1, 1);
+                animator.SetFloat("running",Mathf.Abs(faceDircetion));
+            }
+            else
+            {
+                //蹲着位移
+                animator.SetFloat("squta",Mathf.Abs(faceDircetion));
+            }
         }
 
         if (Input.GetButtonDown("Jump") && playerCollider2D.IsTouchingLayers(ground))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jump * Time.deltaTime);
-            animator.SetBool("jumping",true);
+            Debug.Log("this is the stat"+hurtStat);
+            if (!hurtStat)
+            {
+                //处于受伤状态键入jump
+                rb.velocity = new Vector2(rb.velocity.x, jump * Time.deltaTime);
+                animator.SetBool("jumping", true);
+                animator.Play("jump");
+                if (animator.GetBool("squta"))
+                {
+                    //若处于蹲伏状态键入jump
+                    animator.SetBool("squta",false);
+                }
+            }
         }
         
         //蹲伏
@@ -150,21 +170,27 @@ public class player : MonoBehaviour
                 Destroy(col.gameObject);
                 Debug.Log("destroy the enemy");
                 
-                rb.velocity = new Vector3(pos.x, pos.y,pos.y + 10f);
+                rb.velocity = new Vector2(0,6f);
             }
             else
             {
+                if (animator.GetBool("squta"))
+                {
+                    //蹲着受伤的
+                    this.animator.SetBool("squta",false);
+                }
                 //否则则是直接碰撞到敌人，播放受伤效果
                 animator.SetBool("hurt",true);
                 hurtStat = true;
+ 
                 //播放完动画切换会正常动画状态；
                 if (transform.position.x < pos.x)
                 {
-                    rb.velocity = new Vector2(-10f, rb.velocity.y);
+                    rb.velocity = new Vector2(-3f, rb.velocity.y);
                 }
                 else
                 {
-                    rb.velocity = new Vector2(10f, rb.velocity.y);
+                    rb.velocity = new Vector2(3f, rb.velocity.y);
                 }
             }
         }

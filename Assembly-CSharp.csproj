@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CameraScript\CameraScript.cs" />
+    <Compile Include="Assets\enemyScrpt\Eagle.cs" />
+    <Compile Include="Assets\enemyScrpt\Enemy.cs" />
+    <Compile Include="Assets\enemyScrpt\Frog.cs" />
     <Compile Include="Assets\mPlayerScript\player.cs" />
     <Reference Include="Cinemachine">
       <HintPath>/Users/hsqmini/work_space/u3dFirst/Library/ScriptAssemblies/Cinemachine.dll</HintPath>

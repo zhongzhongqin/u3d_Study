@@ -112,6 +112,11 @@ public class player : MonoBehaviour
     void switchAnim()
     {
         animator.SetBool("idle",false);
+
+        if (rb.velocity.y < 0.1f && !playerCollider2D.IsTouchingLayers(ground))
+        {
+            animator.SetBool("falling",true);
+        }
         if (animator.GetBool("jumping"))
         {
             //在跳跃，仍需判断何时降落
@@ -161,13 +166,13 @@ public class player : MonoBehaviour
         if (col.gameObject.CompareTag("enemy"))
         {
             //todo 销毁enemy 只有踩在敌人头上时，才会将其消灭
-            
+            Enemy frog = col.gameObject.GetComponent<Enemy>();
             var pos = col.gameObject.transform.position;
             
             if (animator.GetBool("falling"))
             {
                 //已经起跳，处于下落状态
-                Destroy(col.gameObject);
+                frog.BeenKilled();
                 Debug.Log("destroy the enemy");
                 
                 rb.velocity = new Vector2(0,6f);

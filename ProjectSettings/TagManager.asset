@@ -6,6 +6,7 @@ TagManager:
   tags:
   - goods
   - enemy
+  - DeadLine
   layers:
   - Default
   - TransparentFX

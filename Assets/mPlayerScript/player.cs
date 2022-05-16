@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using  UnityEngine.UI;
+﻿using  UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
+using UnityEngine.SceneManagement;
 
 public class player : MonoBehaviour
 {
@@ -28,6 +24,12 @@ public class player : MonoBehaviour
     public Text cherryCount;
     //受伤状态标记
     private bool hurtStat = false;
+    //跳跃音效 // 受伤音效 // 击杀音效
+    public AudioSource jumpAudio, hurtAudio, killEnemy;
+    // 当玩家处于下蹲状态时，将其矩形碰撞体关闭，
+    public Collider2D rectCollider2D;
+    // 玩家头顶的点，用于检测玩家在下蹲时是否能站立
+    public Transform headPoint;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -71,10 +73,11 @@ public class player : MonoBehaviour
         
         if (faceDircetion != 0)
         {
+            //键入左右方向
+            transform.localScale = new Vector3(faceDircetion, 1, 1);
+            
             if (!animator.GetBool("squta"))
             {
-                //若处于蹲伏状态键入左右方向
-                transform.localScale = new Vector3(faceDircetion, 1, 1);
                 animator.SetFloat("running",Mathf.Abs(faceDircetion));
             }
             else
@@ -86,7 +89,7 @@ public class player : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && playerCollider2D.IsTouchingLayers(ground))
         {
-            Debug.Log("this is the stat"+hurtStat);
+            this.jumpAudio.Play();
             if (!hurtStat)
             {
                 //处于受伤状态键入jump
@@ -97,6 +100,11 @@ public class player : MonoBehaviour
                 {
                     //若处于蹲伏状态键入jump
                     animator.SetBool("squta",false);
+                    if (Physics2D.OverlapCircle(headPoint.position,0.2f,ground))
+                    {
+                        //玩家能站立时，菜重置站立状态
+                        this.rectCollider2D.enabled = true;
+                    }
                 }
             }
         }
@@ -105,6 +113,8 @@ public class player : MonoBehaviour
         if (Input.GetButtonDown("Vertical"))
         {
             animator.SetBool("squta",true);
+            //将矩形box取消
+            this.rectCollider2D.enabled = false;
         }
     }
 
@@ -144,11 +154,13 @@ public class player : MonoBehaviour
         }
     }
     
-    // 物品碰撞检测
+    
+    //触发器检测
     private void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log(col.gameObject.tag);
         //隐式调用字符串比对，相较在if中显示比较性能高些
+        // 物品碰撞检测
         if (col.gameObject.CompareTag("goods"))
         {
             //销毁物品
@@ -157,6 +169,10 @@ public class player : MonoBehaviour
             cherryCount.text = goodsCount.ToString();
             Debug.Log("destroy the goods");
             return;
+        }else if (col.gameObject.CompareTag("DeadLine"))
+        {
+            //restart game
+            Invoke("RestartGame",2f);
         }
     }
     
@@ -199,5 +215,12 @@ public class player : MonoBehaviour
                 }
             }
         }
+    }
+    
+    //
+    private void RestartGame()
+    {
+        Debug.Log("dead line col");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

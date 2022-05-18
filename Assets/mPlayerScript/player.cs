@@ -1,4 +1,5 @@
-﻿using  UnityEngine.UI;
+﻿using System;
+using  UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -51,6 +52,12 @@ public class player : MonoBehaviour
             switchAnim();
             return;
         }
+    }
+    
+    //update
+    private void Update()
+    {
+        cherryCount.text = goodsCount.ToString();
     }
 
     //角色移动
@@ -121,8 +128,6 @@ public class player : MonoBehaviour
     //玩家跳跃/下落动画切换
     void switchAnim()
     {
-        animator.SetBool("idle",false);
-
         if (rb.velocity.y < 0.1f && !playerCollider2D.IsTouchingLayers(ground))
         {
             animator.SetBool("falling",true);
@@ -163,10 +168,7 @@ public class player : MonoBehaviour
         // 物品碰撞检测
         if (col.gameObject.CompareTag("goods"))
         {
-            //销毁物品
-            Destroy(col.gameObject);
-            goodsCount += 1;
-            cherryCount.text = goodsCount.ToString();
+            col.GetComponent<Animator>().Play("hasGot");
             Debug.Log("destroy the goods");
             return;
         }else if (col.gameObject.CompareTag("DeadLine"))
@@ -222,5 +224,11 @@ public class player : MonoBehaviour
     {
         Debug.Log("dead line col");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    
+    //物品计数
+    public void CherryCount()
+    {
+        goodsCount += 1;
     }
 }

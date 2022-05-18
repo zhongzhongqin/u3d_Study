@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
 
      public void Death()
      {
+         //将碰撞体屏蔽了
+         GetComponent<Collider2D>().enabled = false;
          Destroy(gameObject);
      }
      

@@ -63,6 +63,7 @@
     <Compile Include="Assets\enemyScrpt\Frog.cs" />
     <Compile Include="Assets\enemyScrpt\Opossum.cs" />
     <Compile Include="Assets\EnvironmentScript\house.cs" />
+    <Compile Include="Assets\GoodsScript\Cherry.cs" />
     <Compile Include="Assets\mPlayerScript\player.cs" />
     <None Include="Assets\8-Bit_Action_Free\Readme.txt" />
     <Reference Include="Cinemachine">
